@@ -62,7 +62,7 @@ const DaftarLembagaDiklat = () => {
           value={filterMatra}
           onChange={(e) => setFilterMatra(e.target.value)}
         >
-          <option value="">-- Semua Kategori --</option>
+          <option value="">-- Matra --</option>
           <option value="Darat">Darat</option>
           <option value="Laut">Laut</option>
           <option value="Udara">Udara</option>
@@ -74,7 +74,6 @@ const DaftarLembagaDiklat = () => {
           value={filterJudul}
           onChange={(e) => setFilterJudul(e.target.value)}
         />
-        <button className="search-button" onClick={filterData}>Cari</button>
       </section>
 
       <div style={{ marginLeft: '50px', marginRight: '50px' }}>
