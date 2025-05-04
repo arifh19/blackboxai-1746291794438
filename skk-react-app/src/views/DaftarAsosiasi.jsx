@@ -72,7 +72,6 @@ const DaftarAsosiasi = () => {
           value={filterJudul}
           onChange={(e) => setFilterJudul(e.target.value)}
         />
-        <button className="search-button" onClick={filterData}>Cari</button>
       </section>
 
       <div style={{ marginLeft: '50px', marginRight: '50px' }}>
@@ -86,7 +85,7 @@ const DaftarAsosiasi = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {currentData.map((item, index) => (
               <tr key={index}>
                 <td><img src={item.logo} alt="logo" width="90" /></td>
                 <td>{item.name}</td>
