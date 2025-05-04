@@ -653,3 +653,44 @@ form button {
 .footer-social a:hover {
     color: #ddd;
 }
+
+.kementerian-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kementerian-card {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.kementerian-card img {
+  width: 100px;
+  height: 100px;
+  margin-right: 15px;
+}
+.info {
+  flex: 1;
+}
+.info h3, .info p {
+  font-weight: bold;
+}
+.info p {
+  margin: 3px 0;
+}
+
+.document-list p {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.document-list a {
+  text-decoration: none;
+  color: black;
+}
