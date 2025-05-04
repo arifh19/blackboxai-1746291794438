@@ -87,7 +87,7 @@ const DaftarLembagaDiklat = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {currentData.map((item, index) => (
               <tr key={index}>
                 <td><img src={item.logo} alt="logo" width="90" /></td>
                 <td>{item.name}</td>
