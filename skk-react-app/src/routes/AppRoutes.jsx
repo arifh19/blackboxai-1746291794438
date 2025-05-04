@@ -5,6 +5,7 @@ import TentangKami from '../views/TentangKami';
 import StrukturOrganisasi from '../views/StrukturOrganisasi';
 import DaftarLSP from '../views/DaftarLSP';
 import DaftarAsosiasi from '../views/DaftarAsosiasi';
+import DaftarLembagaDiklat from '../views/DaftarLembagaDiklat';
 import RegulasiInternal from '../views/RegulasiInternal';
 import RegulasiEksternal from '../views/RegulasiEksternal';
 import Agenda from '../views/Agenda';
@@ -30,6 +31,7 @@ const AppRoutes = () => {
         <Route path="/struktur-organisasi" element={<StrukturOrganisasi />} />
         <Route path="/daftar-lsp" element={<DaftarLSP />} />
         <Route path="/daftar-asosiasi" element={<DaftarAsosiasi />} />
+        <Route path="/daftar-lembaga-diklat" element={<DaftarLembagaDiklat />} />
         <Route path="/regulasi-internal" element={<RegulasiInternal />} />
         <Route path="/regulasi-eksternal" element={<RegulasiEksternal />} />
         <Route path="/agenda" element={<Agenda />} />
