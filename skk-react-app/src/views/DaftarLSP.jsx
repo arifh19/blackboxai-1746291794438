@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Pagination from '../components/Pagination';
 
 const initialData = [
   {
@@ -27,34 +28,39 @@ const initialData = [
     tuk: 72,
     skema: 53,
   },
+  // Add more data as needed
 ];
+
+const ITEMS_PER_PAGE = 2;
 
 const DaftarLSP = () => {
   const [filterKategori, setFilterKategori] = useState('');
   const [filterJudul, setFilterJudul] = useState('');
-  const [data, setData] = useState(initialData);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filterData = () => {
-    let filtered = initialData;
+  const filteredData = initialData.filter(item => {
+    return (
+      (filterKategori === '' || item.kategori === filterKategori) &&
+      (filterJudul === '' || item.name.toLowerCase().includes(filterJudul.toLowerCase()))
+    );
+  });
 
-    if (filterKategori) {
-      filtered = filtered.filter(item => item.kategori === filterKategori);
-    }
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
-    if (filterJudul) {
-      filtered = filtered.filter(item =>
-        item.name.toLowerCase().includes(filterJudul.toLowerCase())
-      );
-    }
+  const currentData = filteredData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
-    setData(filtered);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
     <>
       <Navbar />
       <header className="header-banner" id="home">
-        <h2>DAFTAR LEMBAGA SERTIFIKASI PROFESI (LSP)</h2>
+        <h2>DAFTAR LSP</h2>
       </header>
 
       <section className="filter-section">
@@ -75,7 +81,6 @@ const DaftarLSP = () => {
           value={filterJudul}
           onChange={(e) => setFilterJudul(e.target.value)}
         />
-        <button className="search-button" onClick={filterData}>Cari</button>
       </section>
 
       <div style={{ marginLeft: '50px', marginRight: '50px' }}>
@@ -91,7 +96,7 @@ const DaftarLSP = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {currentData.map((item, index) => (
               <tr key={index}>
                 <td><img src={item.logo} alt="logo" width="90" /></td>
                 <td>{item.name}</td>
@@ -103,6 +108,8 @@ const DaftarLSP = () => {
             ))}
           </tbody>
         </table>
+
+        <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
       </div>
       <Footer />
     </>
