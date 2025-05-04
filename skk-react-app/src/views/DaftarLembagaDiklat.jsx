@@ -23,6 +23,7 @@ const initialData = [
     alamat: 'Wisma Aldiron, lt 013, Jl. Gatot Subroto No.Kav 72, RT.1/RW.4, Pancoran, Kec. Pancoran, Kota Jakarta Selatan, Daerah Khusus Daerah Khusus Ibukota Jakarta, 12780',
   },
 ];
+const ITEMS_PER_PAGE = 2;
 
 const DaftarLembagaDiklat = () => {
 
