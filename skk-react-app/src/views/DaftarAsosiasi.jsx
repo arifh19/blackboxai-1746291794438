@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Pagination from '../components/Pagination';
 
 const initialData = [
   {
@@ -22,26 +23,28 @@ const initialData = [
     alamat: 'Jl. TB Simatupang No.1A, RT.12/RW.8, Jati Padang, Ps. Minggu, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12540',
   },
 ];
-
+const ITEMS_PER_PAGE = 2;
 const DaftarAsosiasi = () => {
   const [filterMatra, setFilterMatra] = useState('');
   const [filterJudul, setFilterJudul] = useState('');
-  const [data, setData] = useState(initialData);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filterData = () => {
-    let filtered = initialData;
+  const filteredData = initialData.filter(item => {
+    return (
+      (filterMatra === '' || item.matra === filterMatra) &&
+      (filterJudul === '' || item.name.toLowerCase().includes(filterJudul.toLowerCase()))
+    );
+  });
 
-    if (filterMatra) {
-      filtered = filtered.filter(item => item.matra === filterMatra);
-    }
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
-    if (filterJudul) {
-      filtered = filtered.filter(item =>
-        item.name.toLowerCase().includes(filterJudul.toLowerCase())
-      );
-    }
+  const currentData = filteredData.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
-    setData(filtered);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -93,6 +96,8 @@ const DaftarAsosiasi = () => {
             ))}
           </tbody>
         </table>
+        <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+
       </div>
       <Footer />
     </>
