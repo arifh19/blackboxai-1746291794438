@@ -49,6 +49,16 @@ const DaftarLembagaDiklat = () => {
     setCurrentPage(page);
   };
 
+  const handleFilterMatraChange = (e) => {
+    setFilterMatra(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleFilterJudulChange = (e) => {
+    setFilterJudul(e.target.value);
+    setCurrentPage(1);
+  };
+
   return (
     <>
       <Navbar />
@@ -60,7 +70,7 @@ const DaftarLembagaDiklat = () => {
         <select
           id="filter-matra"
           value={filterMatra}
-          onChange={(e) => setFilterMatra(e.target.value)}
+          onChange={handleFilterMatraChange}
         >
           <option value="">-- Matra --</option>
           <option value="Darat">Darat</option>
@@ -72,7 +82,7 @@ const DaftarLembagaDiklat = () => {
           id="filter-judul"
           placeholder="Cari"
           value={filterJudul}
-          onChange={(e) => setFilterJudul(e.target.value)}
+          onChange={handleFilterJudulChange}
         />
       </section>
 
@@ -87,14 +97,20 @@ const DaftarLembagaDiklat = () => {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((item, index) => (
-              <tr key={index}>
-                <td><img src={item.logo} alt="logo" width="90" /></td>
-                <td>{item.name}</td>
-                <td>{item.matra}</td>
-                <td>{item.alamat}</td>
+            {currentData.length > 0 ? (
+              currentData.map((item, index) => (
+                <tr key={index}>
+                  <td><img src={item.logo} alt="logo" width="90" /></td>
+                  <td>{item.name}</td>
+                  <td>{item.matra}</td>
+                  <td>{item.alamat}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center p-4">Data tidak ditemukan</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
         <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
