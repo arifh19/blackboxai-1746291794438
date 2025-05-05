@@ -56,6 +56,16 @@ const DaftarLSP = () => {
     setCurrentPage(page);
   };
 
+  const handleFilterKategoriChange = (e) => {
+    setFilterKategori(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleFilterJudulChange = (e) => {
+    setFilterJudul(e.target.value);
+    setCurrentPage(1);
+  };
+
   return (
     <>
       <Navbar />
@@ -67,7 +77,7 @@ const DaftarLSP = () => {
         <select
           id="filter-kategori"
           value={filterKategori}
-          onChange={(e) => setFilterKategori(e.target.value)}
+          onChange={handleFilterKategoriChange}
         >
           <option value="">-- Semua Kategori --</option>
           <option value="P1">P1</option>
@@ -79,7 +89,7 @@ const DaftarLSP = () => {
           id="filter-judul"
           placeholder="Cari"
           value={filterJudul}
-          onChange={(e) => setFilterJudul(e.target.value)}
+          onChange={handleFilterJudulChange}
         />
       </section>
 
@@ -96,16 +106,22 @@ const DaftarLSP = () => {
             </tr>
           </thead>
           <tbody>
-            {currentData.map((item, index) => (
-              <tr key={index}>
-                <td><img src={item.logo} alt="logo" width="90" /></td>
-                <td>{item.name}</td>
-                <td>{item.kategori}</td>
-                <td>{item.asesor}</td>
-                <td>{item.tuk}</td>
-                <td>{item.skema}</td>
+            {currentData.length > 0 ? (
+              currentData.map((item, index) => (
+                <tr key={index}>
+                  <td><img src={item.logo} alt="logo" width="90" /></td>
+                  <td>{item.name}</td>
+                  <td>{item.kategori}</td>
+                  <td>{item.asesor}</td>
+                  <td>{item.tuk}</td>
+                  <td>{item.skema}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center p-4">Data tidak ditemukan</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
