@@ -1,5 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
+import Login from '../auth/Login';
+import AdminDashboard from '../views/AdminDashboard';
+import UserDashboard from '../views/UserDashboard';
+import ChangePassword from '../views/ChangePassword';
 import Home from '../views/Home';
 import TentangKami from '../views/TentangKami';
 import StrukturOrganisasi from '../views/StrukturOrganisasi';
@@ -18,9 +23,29 @@ import Survey from '../views/Survey';
 import Galeri from '../views/Galeri';
 import Berita from '../views/Berita';
 import HubungiKami from '../views/HubungiKami';
-import Login from '../auth/Login';
-import Register from '../auth/Register';
-// Import other views as needed
+
+const ProtectedRoute = ({ children, requiredSubject }) => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Check ability for requiredSubject
+  const canAccess = user.ability.some(
+    (a) => (a.action === 'manage' && a.subject === 'all') || (a.action === 'read' && a.subject === requiredSubject)
+  );
+
+  if (!canAccess) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
 
 const AppRoutes = () => {
   return (
@@ -45,8 +70,35 @@ const AppRoutes = () => {
         <Route path="/berita" element={<Berita />} />
         <Route path="/hubungi-kami" element={<HubungiKami />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        {/* Add other routes here */}
+
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute requiredSubject="dashboard">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute requiredSubject="dashboard">
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/change-password"
+          element={
+            <ProtectedRoute requiredSubject="dashboard">
+              <ChangePassword />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
   );
